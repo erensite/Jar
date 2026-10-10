@@ -31,8 +31,8 @@ jobs:
           test -n "$POM"
           DIR=$(dirname "$POM")
           mkdir -p "$DIR/libs"
-          cp ItemsAdder_4.0.15.jar "$DIR/libs/"
-          cp znpcs-5.3.jar "$DIR/libs/"
+          cp ItemsAdder_4.0.15.jar "$DIR/libs/ItemsAdder_4_0_15.jar"
+          cp znpcs-5.3.jar "$DIR/libs/znpcs-5_3.jar"
           cd "$DIR"
           mvn -B clean package
 
