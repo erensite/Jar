@@ -25,16 +25,21 @@ jobs:
           unzip -o itemkeeper-project.zip
           find . -name pom.xml
 
+      
       - name: Build
+        shell: bash
         run: |
-          POM=$(find . -name pom.xml | head -n 1)
+          set -euxo pipefail
+          POM=$(find "$GITHUB_WORKSPACE" -name pom.xml -not -path '*/.m2/*' | head -n 1)
           test -n "$POM"
           DIR=$(dirname "$POM")
           mkdir -p "$DIR/libs"
-          cp ItemsAdder_4.0.15.jar "$DIR/libs/ItemsAdder_4_0_15.jar"
-          cp znpcs-5.3.jar "$DIR/libs/znpcs-5_3.jar"
+          cp "$GITHUB_WORKSPACE/ItemsAdder_4.0.15.jar" "$DIR/libs/ItemsAdder_4_0_15.jar"
+          cp "$GITHUB_WORKSPACE/znpcs-5.3.jar" "$DIR/libs/znpcs-5_3.jar"
+          ls -l "$DIR/libs"
           cd "$DIR"
-          mvn -B clean package
+          mvn -B -ntp clean package
+          
 
       - uses: actions/upload-artifact@v4
         with:
